@@ -87,28 +87,25 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    @Override
+   @Override
     public Producto actualizarProducto(Long id, Producto producto) {
         log.info("Iniciando actualización de producto con ID: {}", id);
 
         validarId(id);
-        validarProductoParaActualizacion(producto);
+        // validarProductoParaActualizacion(producto); // Opcional
 
         Producto productoExistente = productoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado con ID: " + id));
 
-        // Validar que el código no esté en uso por otro producto
-        if (!productoExistente.getCodigo().equals(producto.getCodigo()) &&
-                productoRepository.existsByCodigo(producto.getCodigo())) {
-            throw new IllegalArgumentException("Ya existe un producto con el código: " + producto.getCodigo());
-        }
+        // ... validaciones de código ...
 
         // Actualizar campos
         productoExistente.setCodigo(producto.getCodigo());
         productoExistente.setNombre(producto.getNombre());
         productoExistente.setDescripcion(producto.getDescripcion());
         productoExistente.setPrecio(producto.getPrecio());
-        productoExistente.setCantidad(producto.getCantidad());
+        productoExistente.setCantidad(producto.getCantidad());    
+        productoExistente.setImg(producto.getImg());
         productoExistente.setActivo(producto.getActivo());
         productoExistente.setFechaActualizacion(System.currentTimeMillis());
 

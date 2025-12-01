@@ -30,6 +30,9 @@ public class Producto {
 
     @Column(nullable = false)
     private Integer cantidad;
+    
+    @Column(name = "img")
+    private String img; 
 
     @Column(name = "activo")
     private Boolean activo = true;
